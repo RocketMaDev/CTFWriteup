@@ -16,7 +16,7 @@ ghidra分析为32位程序
 
 由于username在函数`printf`中，因此应当考虑格式化字符串漏洞将指定数值注入`randint`
 
-# EXPLOIT
+## EXPLOIT
 
 经过gdb调试可知，变量`username`所在地址比printf第一个参数的地址高0x28，即10个DWORD  
 构造以下exp：
