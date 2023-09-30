@@ -36,3 +36,10 @@ print(flag)
 > 奇怪的是，别的flag都是moectf开头，这个是JBtf开头，不知道出题者何意
 
 Done.
+
+## HOTFIX
+
+已在github发issue得到回复：只需要将`.plt`, `.plt.sec`和`.plt.got`全部设置好ebx的值即可，
+在`.plt`中已给出ebx值，只要在其他段全选后右键设置寄存器的值与`.got`的首地址相同即可
+
+[REF](https://github.com/NationalSecurityAgency/ghidra/issues/5825)
