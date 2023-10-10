@@ -1,6 +1,7 @@
 # Pwn新手的成长之路
 
-`wp`中包含个人做pwn题的writeup
+`wp`中包含无处归档的wp  
+个人做pwn题的writeup分专题放在各文件夹中
 
 ## short shellcode
 
