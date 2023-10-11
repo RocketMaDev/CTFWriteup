@@ -12,8 +12,19 @@ ghidra分析为64位程序
 
 ## 前置知识
 
+call的时候，会向栈内压入call下面1条指令，进入函数后，会压入rbp，然后
+mov rbp, rsp  
+leave执行mov rsp, rbp; pop rbp，ret执行pop rip如下图所示（建议配合exp）  
+![legend](../assets/legend.jpg)
 
-TODO 说明libcsearcher
+由于rbp间接影响返回地址，所以需要运行2次`leave;ret`，这时retAddr就写`leave;ret`的地址
+
+## 思路
+
+将栈迁移过来后，按ret2libc思路做即可
+
+这里使用LibcSearcher，主要是方便本机调试，各位完全可以用提供的libc里的地址
+
 ## EXPLOIT
 
 ```python
