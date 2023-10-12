@@ -1,7 +1,5 @@
 # ret2shell 
 
-From 0rays.
-
 ## 文件分析
 
 下载`ret2shell`, NX off, PIE off, RELRO off  
