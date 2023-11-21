@@ -1,4 +1,4 @@
-# W2 puts or system
+# W3 puts or system
 
 ## 文件分析
 
@@ -42,5 +42,9 @@ sh.sendlineafter(b'it', f'%{highAddr}c%11$hhn%{(addr & 0xffff) - highAddr}c%12$h
 
 sh.interactive()
 ```
+
+## 第一次三血！
+
+<img src="../assets/3rdBlood.jpg" width="40%" title="好耶">
 
 Done.
