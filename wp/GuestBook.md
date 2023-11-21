@@ -1,5 +1,7 @@
 # GuestBook
 
+From CBCTF x DASCTF
+
 ## 文件分析
 
 下载`GuestBook`, NX on, PIE off, Canary on, RELRO partial  
@@ -8,7 +10,7 @@ ghidra分析为64位程序
 ## 逆向
 
 name上就是canary，首先填满name使得canary值泄露；  
-还要注意输入时使用的是scanf，虽然可以栈溢出，但是遇到空字符会截断
+还要注意输入时使用的是scanf，虽然可以栈溢出，但是遇到空字符会截断，
 需要多次溢出，实现跳转到`magic`后门函数
 
 ## EXPLOIT
