@@ -5,7 +5,7 @@
 下载`format_level2`, NX on, PIE off, Canary on, RELRO full  
 ghidra分析为32位程序
 
-## 逆向
+## 解题思路
 
 这次打龙不能拿到flag了，但是后门函数还在，可以考虑通过写入返回地址，
 跳转到后门函数处输出flag

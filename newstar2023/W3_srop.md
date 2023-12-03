@@ -5,7 +5,7 @@
 NX on, PIE off, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 思路和上一题类似，先进行栈迁移，方便控制地址，然后srop
 

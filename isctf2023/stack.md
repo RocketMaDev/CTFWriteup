@@ -5,7 +5,7 @@
 NX on, PIE off, Canary off, RELRO off  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 最简单的ret2text，程序中存在后门函数，栈溢出空间自定，
 只要注意xmm寄存器要求的栈平衡

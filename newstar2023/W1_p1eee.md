@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE on, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 该程序存在后门函数，因此尝试重定向回该函数  
 但是只能溢出一个字节

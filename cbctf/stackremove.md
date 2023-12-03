@@ -5,7 +5,7 @@
 下载`stackremove`, NX on, PIE on, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 栈上空间很大，但是溢出rbp的空间很小，因此考虑栈迁移后ret2libc  
 第一步先找到栈上一个有程序偏移的地址，利用`printf(..., buf + offset)`输入输入偏移后算出pieBase，

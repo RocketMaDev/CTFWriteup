@@ -7,7 +7,7 @@ From CBCTF x DASCTF
 下载`easybox`, NX on, PIE off, Canary on, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 pingCommand虽然ban了很多字符，但是我们仍可以通过拼接字符串来绕过sh, cat和flag
 

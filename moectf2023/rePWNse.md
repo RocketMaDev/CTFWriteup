@@ -5,7 +5,7 @@
 下载`rePWNse`, NX on, PIE off, Canary off, RELRO full
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 `makebinsh`函数中有一个字母表和待输入的7位数字，易知else子句都是随机字母，难以组成目标；
 而if子句和判断语句之外的cat语句可以组成目标，故得到2个等式和5个方程，整理得输入后的数组：

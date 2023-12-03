@@ -5,7 +5,7 @@
 下载`shellcode_level1`, NX on, PIE on, Canary on, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 这次要我们选择内存单元执行，有stack, .bss, heap, mmap页等  
 其中mmap分配时0页为rw-，后改为rwx；  

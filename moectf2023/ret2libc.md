@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE off, Canary off, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 vuln函数里就写了利用ret2libc...和之前一样
 

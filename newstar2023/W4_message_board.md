@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE off, Canary off, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 一开始就要拿到puts的地址？how to？  
 scanf也只能修改任意地址一次，又要怎么做？

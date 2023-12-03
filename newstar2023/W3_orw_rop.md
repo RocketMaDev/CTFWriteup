@@ -5,7 +5,7 @@
 下载`ezorw`, NX on, PIE off, Canary on, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 程序存在一片区域rwx，并且禁用了system，那么只要将shellcode写到那片区域，
 再执行就可以了

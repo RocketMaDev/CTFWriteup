@@ -6,7 +6,7 @@ NX on, PIE on, Canary off, RELRO full
 ghidra分析为64位程序  
 glibc: 2.31
 
-## 逆向
+## 解题思路
 
 程序模拟了命令行的执行，是一道简单堆题，主要利用点在cp命令上，
 浅拷贝的模式使得uaf、double free十分容易

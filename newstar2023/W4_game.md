@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE on, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 观察程序，发现 ~~原神~~ 函数末尾运行了`(*(puts + (-(long)cnt - (long)offset)))(bytes);`  
 那么只要控制cnt和offset，就可以运行system；控制bytes可以打开shell

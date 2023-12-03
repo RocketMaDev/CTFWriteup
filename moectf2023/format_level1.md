@@ -5,7 +5,7 @@
 下载`format_level1`, NX on, PIE off, Canary on, RELRO full  
 ghidra分析为32位程序
 
-## 逆向
+## 解题思路
 
 程序员斗恶龙的故事开始了！由于我们先攻击龙，
 所以我们的目标是我们的atk>龙的hp即可  

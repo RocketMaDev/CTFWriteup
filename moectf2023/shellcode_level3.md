@@ -5,7 +5,7 @@
 下载`shellcode_level3`, NX on, PIE off, Canary off, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 程序读入5字节并执行，且存在后门函数  
 考虑跳转指令执行shellcode跳转到此处

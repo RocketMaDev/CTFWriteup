@@ -7,7 +7,7 @@ From CBCTF x DASCTF
 下载`GuestBook`, NX on, PIE off, Canary on, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 name上就是canary，首先填满name使得canary值泄露；  
 还要注意输入时使用的是scanf，虽然可以栈溢出，但是遇到空字符会截断，

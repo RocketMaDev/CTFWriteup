@@ -5,7 +5,7 @@
 下载`format_level3`, NX on, PIE off, Canary on, RELRO full  
 ghidra分析为32位程序
 
-## 逆向
+## 解题思路
 
 和level2类似，存在后门，但是输入的str放到了.bss上
 

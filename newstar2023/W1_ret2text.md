@@ -5,7 +5,7 @@
 下载`ret2text`, NX on, PIE off, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 `backdoor`函数直接打开sh了，打就完了
 

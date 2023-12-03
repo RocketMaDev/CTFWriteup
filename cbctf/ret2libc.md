@@ -5,7 +5,7 @@
 下载`ret2libc`, NX on, PIE on, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 main函数中先是scan了一个int，可以利用它来*泄露main的地址*以找到PIE偏移  
 然后一个read提供*栈溢出*的空间  

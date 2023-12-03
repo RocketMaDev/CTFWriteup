@@ -7,7 +7,7 @@ From buuoj.
 下载`ciscn_2019_c_1`, NX on, PIE off, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 函数`encrypt()`中存在`gets`，考虑**栈溢出**攻击  
 .text段中不存在后门函数，并且有nx，考虑ret2libc

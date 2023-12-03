@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE off, Canary off, RELRO partial  
 ~~这不是写明了64位~~
 
-## 逆向
+## 解题思路
 
 思路跟ret2text 32一致，只要执行`system("/bin/sh")`即可
 

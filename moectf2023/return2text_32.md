@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE off, Canary off, RELRO partial  
 ~~这不是写明了32位~~
 
-## 逆向
+## 解题思路
 
 观察vuln函数里面输入一个数，并其后从输入中获取对应字节数 ~~%d个？随便打~~  
 观察.text段，存在`b4ckdoor`函数，但是执行echo hi？？

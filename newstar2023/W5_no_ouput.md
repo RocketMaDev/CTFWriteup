@@ -7,7 +7,7 @@
 下载`no_ouput`, NX on, PIE off, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 没有输出函数，但是csu_init在，可以轻松控制寄存器，那么因为 read
 函数离 write 函数很近，可以由此打印出read@got拿到libcBase，然后就能调

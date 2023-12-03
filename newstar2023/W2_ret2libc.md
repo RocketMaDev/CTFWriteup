@@ -5,7 +5,7 @@
 下载`ret2libc`, NX on, PIE off, Canary off, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 参考我的moectf2023和cbctf的wp，很常规的一题
 

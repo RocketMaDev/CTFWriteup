@@ -5,7 +5,7 @@
 下载`putsorsys`, NX on, PIE off, Canary on, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 程序可多次输入，且存在格式化字符串漏洞；在printf后，执行了`puts("/bin/sh")`  
 根据题意，将puts调用替换为system调用就可以拿到shell

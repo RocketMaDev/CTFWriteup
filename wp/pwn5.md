@@ -7,7 +7,7 @@ From buuoj.
 下载`pwn`，NX on, PIE on, RELRO partial  
 ghidra分析为32位程序
 
-## 逆向
+## 解题思路
 
 找到main函数后，发现输入username和passwd，并且存在后门：当passwd==randint时，打开sh，其中randint从文件读入为随机数  
 由于读入的username和passwd长度等于其数组长度，无法考虑 **栈溢出** ，转而考虑对`atoi()`的利用

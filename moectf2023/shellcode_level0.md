@@ -5,7 +5,7 @@
 下载`shellcode_level0`, NX off, PIE on, Canary on, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 程序中直接执行rbp-0x70的地址，且给了100B的空间，填一个shellcode即可
 

@@ -7,7 +7,7 @@
 NX off, PIE on, Canary on, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 开始时读入一个ye/no，就可以开始输入shellcode了，一开始以为有16字节的限制，
 还把字符范围限制在了`'O'~'_'`之间，但是实际动调时发现还有1个任意字符的机会

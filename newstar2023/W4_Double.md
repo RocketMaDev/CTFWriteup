@@ -5,7 +5,7 @@
 下载`Double`, NX on, PIE off, Canary on, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 堆入门题，打开了我学习堆的大门
 

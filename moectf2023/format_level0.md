@@ -5,7 +5,7 @@
 下载`format_level0`, 保护全开
 ghidra分析为32位程序
 
-## 逆向
+## 解题思路
 
 > Ghidra这次解析失误了，完全不可读...  
 > 用的Decompiler Explorer，BinaryNinja给出的正确代码

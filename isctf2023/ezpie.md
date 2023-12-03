@@ -5,7 +5,7 @@
 NX on, PIE on, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 栈上放上了func函数的地址，只要把buf填满就可以读到func的地址，
 然后就打ret2libc就行

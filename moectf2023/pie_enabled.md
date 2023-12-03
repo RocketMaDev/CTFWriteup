@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE on, Canary off, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 vuln函数直接把自己的地址打印出来了...直接减一减拿到piebase就和之前的题一样了
 

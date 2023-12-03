@@ -5,7 +5,7 @@
 下载`shellcode_level2`, NX off, PIE on, Canary on, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 该程序用gets读入100字节，shellcode随便打  
 程序运行一个变量+1对应的地址，且该变量首字节不为0则全部置0  

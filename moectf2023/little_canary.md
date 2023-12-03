@@ -5,7 +5,7 @@
 下载`pwn`, NX on, PIE off, Canary on, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 先溢出字符数组读取Canary的值
 

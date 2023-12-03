@@ -5,7 +5,7 @@
 下载`planet`, NX on, PIE on, Canary on, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 有后门函数，虽然有随机数，但以时间为种子，直接模拟攻击；
 命令限长，就用"$0"打开shell

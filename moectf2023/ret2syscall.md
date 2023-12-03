@@ -5,7 +5,7 @@
 下载`ret2syscall`, NX on, PIE off, Canary off, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 摆明了随便打
 

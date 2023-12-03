@@ -7,7 +7,7 @@
 下载`ret2txtp`, NX on, PIE off, Canary on, RELRO no  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 通过溢出canary的第一个字符，可以借助puts把剩下的canary打印出来，
 因为没有pie，直接返回到`back_door`即可（需要ret补rsp）

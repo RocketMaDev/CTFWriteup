@@ -5,7 +5,7 @@
 下载`-2`(什么魔鬼命名), NX on, PIE off, Canary off, RELRO partial  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 这道题写明了需要栈迁移：从read的参数可知，我们只能写完`prev_rbp`后只剩8字节  
 而当前栈上非常空旷，有0x50个字节可用！

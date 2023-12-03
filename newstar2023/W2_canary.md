@@ -5,7 +5,7 @@
 下载`canary`, NX on, PIE off, Canary on, RELRO full  
 ghidra分析为64位程序
 
-## 逆向
+## 解题思路
 
 观察程序发现后门函数，且没有pie，首先利用格式化字符串漏洞打印出canary的值，
 然后栈溢出补上canary后跳转到后门函数即可
