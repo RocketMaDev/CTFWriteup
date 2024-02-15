@@ -19,6 +19,14 @@ glibc 2.23，tcache还没有，打fastbin dup，先分配0x80的chunk在unsorted
 一开始想用freeHook的，但是因为fastbin在分配的时候会检查chunk size，而freeHook周围都是0，
 所以用不了；而mallocHook周围有libc地址，可以利用字节错位，分配一个有效的chunk
 
+## 分配示意
+
+<img src="../assets/bytecross.png" height="80%" width="80%">
+
+颜色是后期涂的，很明显，字节错位的要求是含有`p64(libc地址)+p64(0)`才可以
+
+> 图中的地址是打不通的，仅作示意；黄色部分是mallocHook
+
 ## EXPLOIT
 
 ```python
