@@ -139,8 +139,8 @@ Out[2]: b'VIDAR{Wow!Y0u_kn0w_4_l1ttl3_0f_UPX!}'
 
 *一个简单的RSA*
 
-根据费马小定理， $p ^ { q - 1 } = 1 (mod q)$  
-所以 $p ^ q = p (mod pq)$  
+根据费马小定理， $p ^ { q - 1 } = 1 (mod\ q)$  
+所以 $p ^ q = p (mod\ pq)$  
 题目里给出的leak1和leak2，实际上就是p和q
 
 由p, q, e, c解密rsa

@@ -35,6 +35,8 @@ with open('finded.exe', 'wb') as exe:
     exe.write(binary)
 ```
 
+> Ghidra不需要patch花指令就能反编译哦
+
 当我还在考虑用的是什么算法的时候，突然发现，对一个字节的操作是不涉及输入的其他字节的
 
 <img src="../assets/individual.png" height="70%" width="70%">
