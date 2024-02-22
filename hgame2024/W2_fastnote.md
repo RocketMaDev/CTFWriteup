@@ -7,7 +7,7 @@
 |属性  |值    |
 |------|------|
 |Arch  |x64   |
-|RELRO |full  |
+|RELRO |Full  |
 |Canary|on    |
 |NX    |on    |
 |PIE   |on    |
