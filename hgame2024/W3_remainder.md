@@ -14,11 +14,11 @@ By: RocketDev
 
 程序上来先放两个假flag，然后打印了一段数据
 
-<img src="../assets/susData.png" height="100%" width="100%">
+<img src="assets/susData.png" height="100%" width="100%">
 
 一开始没什么感觉，就到字符串查找窗口看了看，好像还藏了个exe？
 
-<img src="../assets/susString.png" height="100%" width="100%">
+<img src="assets/susString.png" height="100%" width="100%">
 
 用ImHex提取出数据，再隔三取一组成新的程序进行分析：
 
@@ -39,7 +39,7 @@ with open('finded.exe', 'wb') as exe:
 
 当我还在考虑用的是什么算法的时候，突然发现，对一个字节的操作是不涉及输入的其他字节的
 
-<img src="../assets/individual.png" height="70%" width="70%">
+<img src="assets/individual.png" height="70%" width="70%">
 
 那么我们可以推测使用和flag一样长的同字符字符串，然后从x64dbg里拿它的加密后数据，
 就可以得到加密所产生的差值，再将其反应用到加密的flag上就可以解出flag
@@ -285,8 +285,8 @@ gcc -lbcrypt -o decrypt.exe decrypt.o
 在管理员桌面上找到了vera密码，回到根目录下，还看见了`vera.hc`，于是用密码挂载了文件，
 打开就是flag
 
-<img src="../assets/secret_password.jpg" height="30%" width="30%">
-<img src="../assets/flagFound.png" height="60%" width="60%">
+<img src="assets/secret_password.jpg" height="30%" width="30%">
+<img src="assets/flagFound.png" height="60%" width="60%">
 
 ### 与ai聊天
 
@@ -296,7 +296,5 @@ gcc -lbcrypt -o decrypt.exe decrypt.o
 
 莫名其妙就拿到flag了
 
-<img src="../assets/aitest.png" height="80%" width="80%">
-
-## pwn
+<img src="assets/aitest.png" height="80%" width="80%">
 

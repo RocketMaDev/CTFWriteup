@@ -21,7 +21,7 @@ glibc 2.23，tcache还没有，打fastbin dup，先分配0x80的chunk在unsorted
 
 ## 分配示意
 
-<img src="../assets/bytecross.png" height="80%" width="80%">
+<img src="assets/bytecross.png" height="80%" width="80%">
 
 颜色是后期涂的，很明显，字节错位的要求是含有`p64(libc地址)+p64(0)`才可以
 

@@ -33,7 +33,7 @@ $ curl http://106.14.57.14:31942/post -d 'user_input=%0a"ca""t" /"fl"ag_is_here/
 最后发现会引发异常的代码没在反编译中出现，它会打断异或处理（即只执行了前3项），
 随即进入处理函数，给`flag[32] += 1`
 
-<img src="../assets/disass.png" height="70%" width="70%">
+<img src="assets/disass.png" height="70%" width="70%">
 
 逆完还是不对，最后在`_INIT_1`函数里发现作者把"123456"的`key`字符串替换成了"feifei"，这么折腾完，终于拿到flag了
 
@@ -250,7 +250,7 @@ Out[3]: b'hgame{M@ster_0f ba3kpack_m4nag3ment!}\x00\x0e#'
 用Wireshark打开`capture.pcapng`，发现请求了资源`/ek1ng.jpg`，跟踪tcp流截取raw数据保存，
 然后使用ImHex编辑之，去掉头部的http请求头即可拿到图片
 
-<img src="../assets/ek1ng.jpg" height="40%" width="40%">
+<img src="assets/ek1ng.jpg" height="40%" width="40%">
 
 > ~~还可以这么找女朋友的吗~~
 
@@ -267,7 +267,7 @@ $ python bwmforpy3.py decode ../downloads/media/100191209_p0.jpg ../downloads/me
 
 解码出盲水印：
 
-<img src="../assets/keyToZip.png" height="70%" width="70%">
+<img src="assets/keyToZip.png" height="70%" width="70%">
 
 根据提示将其作为密码提取`secret.zip`中的`secret.txt`文件，看到满屏的文本，
 推测为电子邮件加密。在[spammimic - decode](https://www.spammimic.com/decode.shtml)中解密邮件，
@@ -297,6 +297,4 @@ In [11]: for s in code:
 In [12]: ''.join(decoded)
 Out[12]: 'hgame{0k_you_s0lve_al1_th3_secr3t}'
 ```
-
-## pwn
 

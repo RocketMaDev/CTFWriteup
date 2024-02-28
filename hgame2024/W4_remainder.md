@@ -360,7 +360,7 @@ open('solution', 'w').write(str(solver.model()))
 > 有的数超过了范围，这才想起来这些数字只是中间量，不是flag字符之一，所以去掉限制就sat了
 >
 > 等的时间也是超久，本来都不抱希望了，吃个晚饭一看，sat！整整2922秒！  
-> <img src="../assets/sat.png" height="30%" width="30%">
+> <img src="assets/sat.png" height="30%" width="30%">
 
 由于v?并不与flag一一对应，因此提取出解集后还要再处理一次（主要是不知道解集怎么access）
 
@@ -393,7 +393,7 @@ print(''.join(flag))
 
 下载附件，根据题目推测是zip压缩包，但是无法直接打开，ImHex看一下
 
-<img src="../assets/maybezip.png" height="70%" width="70%">
+<img src="assets/maybezip.png" height="70%" width="70%">
 
 开头有很多27，推测所有字节和0x27做了异或，那么异或回来
 
@@ -417,7 +417,7 @@ with open('itis.zip', 'wb') as rzip:
 
 回过头看里面的文件，好像修改时间有点怪异
 
-<img src="../assets/zipfiles.png" height="100%" width="100%">
+<img src="assets/zipfiles.png" height="100%" width="100%">
 
 创建时间都是114514 ~~好臭的时间~~ ，但是修改时间略有不同，有的是11，有的是10（秒）  
 在ipython里看看各个的修改时间：
@@ -474,7 +474,7 @@ Out[6]: b'what_is_tupper'
 
 结合前面的密钥名字，推测为[塔泊自指公式](https://tuppers-formula.ovh/)，输入数字后得到图像：
 
-<img src="../assets/tupperHgame.png" height="60%" width="60%">
+<img src="assets/tupperHgame.png" height="60%" width="60%">
 
 
 一开始以为要补角补成二维码，想想不对，缺的太多了点，搜了一下发现是MicroQR，
@@ -484,7 +484,7 @@ Out[6]: b'what_is_tupper'
 > ~~思路和cbctf撞了~~  
 > 本来先用pyboof，但是java版本等问题纷至沓来，最后不得不放弃pyboof，
 > 然后网站上画的图还扫不出来，我又拿ps完善了一下原来的图，终于能扫出来了  
-> <img src="../assets/patch.png" height="10%" width="10%">
+> <img src="assets/patch.png" height="10%" width="10%">
 
 ## IOT
 
@@ -513,6 +513,4 @@ Out[6]: b'what_is_tupper'
 In [1]: bytes(map(lambda x: x ^ 0x56, b'>17;3-ee44`3`a{`boe{b2fb{4`d4{bdg5aoog4d44+'))
 Out[1]: b'hgame{33bb6e67-6493-4d04-b62b-421c7991b2bb}'
 ```
-
-## pwn
 

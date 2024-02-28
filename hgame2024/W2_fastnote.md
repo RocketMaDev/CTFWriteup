@@ -23,7 +23,7 @@ glibc 2.31，相比Elden Ring II少了edit函数，leak时脚本一样，
 
 ## 为什么tcache里是3个chunk?
 
-<img src="../assets/stashfb.png" height="70%" width="70%">
+<img src="assets/stashfb.png" height="70%" width="70%">
 
 此时，fastbin头指向的chunk不再有效（错位了），故最后tcache里有且仅有3个chunk  
 （个人想法，不一定正确，有正确的说法可以发discussion）

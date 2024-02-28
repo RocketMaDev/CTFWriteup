@@ -11,7 +11,7 @@ By: RocketDev
 
 考察http的3种头
 
-<img src="../assets/httpheader.png" height="90%" width="90%">
+<img src="assets/httpheader.png" height="90%" width="90%">
 
 然后cyberchef解码高亮的base64文本，找到json标签里的"f14g"字段
 
@@ -25,7 +25,7 @@ By: RocketDev
 
 在注册的时候发现本来可以注册的，但html里有js阻拦，此时禁用js就可以注册了
 
-<img src="../assets/disablejs.png" height="70%" width="70%">
+<img src="assets/disablejs.png" height="70%" width="70%">
 
 注册完用刚才的账号登录，点击`~~click here~~`拿到flag
 
@@ -129,7 +129,7 @@ Out[2]: b'VIDAR{Wow!Y0u_kn0w_4_l1ttl3_0f_UPX!}'
 
 逆向即送
 
-<img src="../assets/ezida.png" height="70%" width="70%">
+<img src="assets/ezida.png" height="70%" width="70%">
 
 > 没有ida可以用ghidra替代
 
@@ -170,7 +170,7 @@ flag格式：'hgame\{[A-Z_]+\}'*
 
 缩放也可以看到哦
 
-<img src="../assets/view.png" height="70%" width="70%">
+<img src="assets/view.png" height="70%" width="70%">
 
 ### simple_attack
 
@@ -187,11 +187,11 @@ flag格式：'hgame\{[A-Z_]+\}'*
 ```
 两张图片CRC校验一致，使用azpr明文攻击得到flag
 
-<img src="../assets/simpleres.png" height="60%" width="60%">
+<img src="assets/simpleres.png" height="60%" width="60%">
 
 浏览器中打开获得flag
 
-<img src="../assets/simpleout.png" height="60%" width="60%">
+<img src="assets/simpleout.png" height="60%" width="60%">
 
 > 一开始忘了怎么用的，挂了一晚上等它找回密钥，
 > 一停止才想起来早就解密完成了

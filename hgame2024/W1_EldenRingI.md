@@ -13,7 +13,7 @@
 
 ## seccomp rules
 
-<img src="../assets/hgame1seccomp.png" height="60%" width="60%">
+<img src="assets/hgame1seccomp.png" height="60%" width="60%">
 
 ## 解题思路
 

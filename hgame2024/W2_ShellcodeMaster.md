@@ -15,7 +15,7 @@
 
 ## seccomp rules
 
-<img src="../assets/shc2rules.png" height="50%" width="50%">
+<img src="assets/shc2rules.png" height="50%" width="50%">
 
 ## 解题思路
 
