@@ -1,9 +1,12 @@
 # hgame 2024
 
-2024/1/29 20:00 - 2024/2/28 20:00
+2024/1/29 20:00 - 2024/2/28 20:00; 2024/3/23 10:00 - 18:00
 
 分4周放题，共解出40题  
 3个第三，1个第四
+
+final解出4题  
+取得第三的好成绩
 
 ## 索引
 
@@ -28,6 +31,9 @@
 - Week 4
   1. [EldenRingFinal](./W4_EldenRingFinal.md)
   2. [其余题目(5道)](./W4_remainder.md)
+- Final
+  1. [1988](./final_1988.md)
+  2. [其余题目(3道)](./final_remainder.md)
 
 ## 每周排行
 
@@ -38,6 +44,8 @@
 ![week3](assets/week3.png)
 
 ![week4](assets/week4.png)
+
+![final](assets/final.png)
 
 ## 总结
 
