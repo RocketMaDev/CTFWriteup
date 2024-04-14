@@ -7,8 +7,7 @@
 先是在*nameless*师傅的博客里找到的灵感：  
 [cyberprinter](https://nameless.top/index.php/2022/09/20/das9%e6%9c%88%e6%9c%88%e8%b5%9bpwn%e9%a2%98%e5%87%ba%e9%a2%98%e5%bf%83%e8%b7%af/)
 
-于是我就在本地调了一下，也是类似有个跳表存在，不过Arch的libc不能改这一项
-（应该是因为开了Full RELRO）
+于是我就在本地调了一下，也是类似有个跳表存在，不过Arch的libc不能改这一项（因为开了Full RELRO）
 
 ![what is ABS?](./assets/disasm.png)
 ![can not write](./assets/vmmap.png)
