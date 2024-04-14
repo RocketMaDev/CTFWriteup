@@ -4,6 +4,8 @@
 当时不是很理解，于是就提起了这件事，然后发现，这个类似于got表一样的东西与`puts`没啥关系，
 倒是与`strlen`有关系
 
+> 省流：看下文粗体结论
+
 先是在*nameless*师傅的博客里找到的灵感：  
 [cyberprinter](https://nameless.top/index.php/2022/09/20/das9%e6%9c%88%e6%9c%88%e8%b5%9bpwn%e9%a2%98%e5%87%ba%e9%a2%98%e5%bf%83%e8%b7%af/)
 
@@ -63,9 +65,9 @@ __hidden_ver1 (strlen, __GI_strlen, __redirect_strlen)
 
 接着跟进到`ifunc2-avx2.h`，其针对经常调用的函数做了cpu针对性的优化。回到gdb，
 跟进`strlen`，实际调用的函数是`__strlen_avx2`，对应的文件是`sysdeps/x86_64/multiarch/strlen-avx2.S`，
-这下答案已经呼之欲出了：glibc通过ifunc2来避免直接调用`strlen`函数，而是使用跳表，
+这下答案已经呼之欲出了：**glibc通过ifunc2来避免直接调用`strlen`函数，而是使用跳表，
 方便后期绑定优化版本，而这个跳表就是在libc的got中，在一些Ubuntu的libc中，只启用了Partial
-RELRO，就可以通过这个方式来修改这一项，达到执行libc中的`puts`时，从跳表中运行任意代码
+RELRO，就可以通过这个方式来修改这一项，达到执行libc中的`puts`时，从跳表中运行任意代码**
 
 > 这也让我想起了前不久刚过去的xz风波，xz同样是借助了glibc的ifunc机制来修改了`liblzma`中的函数，
 > 达到嵌入代码的目的
