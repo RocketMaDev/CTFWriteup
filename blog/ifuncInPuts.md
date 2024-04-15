@@ -1,4 +1,4 @@
-# ifunc2 in puts
+# ifunc in puts
 
 去千岛湖团建的时候和*男孩*聊起上次强网杯中`_exit`的题中用到了`puts@got@libc`，
 当时不是很理解，于是就提起了这件事，然后发现，这个类似于got表一样的东西与`puts`没啥关系，
@@ -63,11 +63,11 @@ __hidden_ver1 (strlen, __GI_strlen, __redirect_strlen)
 #endif
 ```
 
-接着跟进到`ifunc2-avx2.h`，其针对经常调用的函数做了cpu针对性的优化。回到gdb，
+接着跟进到`ifunc-avx2.h`，其针对经常调用的函数做了cpu针对性的优化。回到gdb，
 跟进`strlen`，实际调用的函数是`__strlen_avx2`，对应的文件是`sysdeps/x86_64/multiarch/strlen-avx2.S`，
-这下答案已经呼之欲出了：**glibc通过ifunc2来避免直接调用`strlen`函数，而是使用跳表，
-方便后期绑定优化版本，而这个跳表就是在libc的got中，在一些Ubuntu的libc中，只启用了Partial
-RELRO，就可以通过这个方式来修改这一项，达到执行libc中的`puts`时，从跳表中运行任意代码**
+这下答案已经呼之欲出了：**glibc通过ifunc将优化版本的`strlen`嵌入到库中，
+方便后期绑定优化版本，而这个跳表`*ABS*`就是在libc的got中，在一些Ubuntu的libc中，只启用了Partial
+RELRO，就可以通过修改这一项，达到执行libc中的`puts`时，从跳表中运行任意代码**
 
 > 这也让我想起了前不久刚过去的xz风波，xz同样是借助了glibc的ifunc机制来修改了`liblzma`中的函数，
 > 达到嵌入代码的目的
