@@ -2,7 +2,7 @@
 
 2023年赛博新生杯圆满落幕  
 取得了**第二名**的好成绩  
-![rank 2](../assets/rank.png)
+![rank 2](./assets/rank.png)
 
 ## 索引
 
