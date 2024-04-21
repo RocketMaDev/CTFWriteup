@@ -1,5 +1,7 @@
 # stackremove
 
+from cbctf starter 2023
+
 ## 文件分析
 
 下载`stackremove`, NX on, PIE on, Canary off, RELRO full  
