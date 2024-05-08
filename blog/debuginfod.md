@@ -9,7 +9,7 @@
 
 ## 背景
 
-今年打宁波赛的时候，libc使用了上古的`2.35-0ubuntu3.1_amd64`，glibc-all-in-one下不到，
+今年打宁波赛的时候，libc使用了难以下到的`2.35-0ubuntu3.1_amd64`，glibc-all-in-one下不到，
 问学长，学长也没有，只能使用[Roderick的容器](https://github.com/RoderickChan/docker_pwn_env)
 
 因为没仔细看，导致容器内的pwndbg更新了，而更新又需要容器里没有的sudo，导致容器里也无法调试，
