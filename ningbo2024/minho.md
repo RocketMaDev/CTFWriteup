@@ -102,6 +102,12 @@ tcache entry从`heap -> heap + 0x20`变为了`heap -> _IO_list_all`，然后 *Ul
 `_flags & (_IO_NO_WRITES | _IO_UNBUFFERED | _IO_CURRENTLY_PUTTING) == 0`，
 `_flags`在开启了aslr后是随机的，因此这些位都有可能是1
 
+> 看了一血的解答发现exp是可以百分百成功的，只需要在第一次小堆块溢出写时，
+> 把大堆块的`prev_size`写作`  sh;`，然后将伪造的FILE往前调0x10，
+> 就可以绕过释放时`fd`的限制，具体如图所示
+> 
+> ![optimized](./assets/optimized.png)
+
 ## EXPLOIT
 
 ```python
