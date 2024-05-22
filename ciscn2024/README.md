@@ -6,7 +6,7 @@
 
 ## 部分pwn题题解
 
-1. [gostack]() 
+1. [gostack](./gostack.md) 
 2. [orange_cat_diary]()
 3. [EzHeap]()
 4. [magic_vm](./vm.md) （赛后解出）
