@@ -5,5 +5,5 @@
 ## 题解
 
 1. [SpringBoard](./SpringBoard.md)
-2. MagicBook
+2. [MagicBook](./MagicBook.md)
 3. [vhttp](./vhttp.md)
