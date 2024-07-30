@@ -34,6 +34,9 @@
 
 只禁了`execve`系统调用，因此可以使用`execveat`来拿shell
 
+在设置传参函数的时候还要将r8置为0，因为这个`flags`在我们的情况下是`0x1e`，
+会导致`execveat`无法打开shell
+
 ### `execveat`在libc中出现的时刻
 
 经过源码符号查找，首次出现这个系统调用的版本是[2.27](https://elixir.bootlin.com/glibc/glibc-2.27/source/sysdeps/unix/sysv/linux/fexecve.c#L43)，
