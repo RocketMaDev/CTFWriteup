@@ -113,8 +113,8 @@ def payload(lo:int):
  ; edit
  8b 45 f0               mov eax, DWORD PTR [ebp - 0x10]
  8d 14 85 00 00 00 00   lea edx, [eax * 4]
--8d 83 70 00 00 00      lea eax, [ebx + 0x70]
--01 d0                  add eax, edx
+-8d 83 70 00 00 00      lea eax, [ebx + 0x70]   ; heap
+-01 d0                  add eax, edx            ; &heap[index]
 +8d 83 68 00 00 00      eax, [ebx + 0x68]       ; &DW.ref.__gxx_personality_v0
 +90                     nop
 +90                     nop
@@ -126,5 +126,4 @@ def payload(lo:int):
 ```
 
 第一处修改，把地址修改为bss上的地址个人认为比较好，但是第二处修改由于本质上没有做检查，
-实际上有所疏漏
-
+忽略了`index`，实际上有所疏漏，只是能过check，不能算一个好的方案
