@@ -10,6 +10,24 @@
 
 > 题目可以在[Releases](https://github.com/RocketMaDev/CTFWriteup/releases/download/career/career.tar.zst)附件中找到
 
+### 文件属性
+
+|属性  |值    |
+|------|------|
+|Arch  |x86   |
+|RELRO |No    |
+|Canary|on    |
+|NX    |on    |
+|PIE   |off   |
+|strip |no    |
+|libc  |2.31-0ubuntu9.16|
+
+### 程序粗解
+
+C++菜单题，只用到了`cout`和`endl`，使用`atoi`来把输入的字符串转换为int
+
+### 漏洞分析
+
 1. `main`函数中输入菜单项时，在栈上存在可以覆盖的指针，随后可以对指针写入任意内容
 
 ![bug1](assets/bug1.png)
@@ -23,12 +41,12 @@
 
 ![bug2](assets/bug2.png)
 
-## 个人题解
+### 个人题解
 
 可以先利用任意地址写把`GOT[atoi]`写到`heap`上，这样`show`就能leak libc；
 然后再利用`edit`就可以把`system`的地址写上去，最后输入 *'/bin/sh'* 就可以拿shell
 
-> [!INFO]
+> [!NOTE]
 > 本来想再次利用scanf原语的，但是输入的是`system`的数字，实际写的时候却变成了-1，
 > 知道原因的话可以开一个 discussion
 
@@ -71,9 +89,9 @@ def payload(lo:int):
     sh.interactive()
 ```
 
-## 参考修复方案
+### 参考修复方案
 
-先上个通用沙箱，然后patch一些问题
+先上个通用沙箱，然后patch以下问题
 
 ```diff
 --- orig.S
