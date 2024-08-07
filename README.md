@@ -1,5 +1,8 @@
 # Pwn新手的成长之路
 
+这里是 *RocketDev* 的CTF Writeup仓库，你可以在这里找到我打过的比赛的wp，
+所有blog上的wp都来源于此，如果你想看的wp在blog上还没有的话，不妨先来这里找找
+
 `wp`中包含无处归档的wp  
 个人做pwn题的writeup分专题放在各文件夹中
 
