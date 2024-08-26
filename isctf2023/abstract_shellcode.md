@@ -86,7 +86,7 @@ push rbx ; S 还原rbx的地址到rsp上
 ret      ; \xc3 ; aka pop rip: 程序跳转到rbx的地址上
 ```
 
-## 参考文献
+## 参考
 
 [printable shellcode](https://web.archive.org/web/20110716082850/http://skypher.com/wiki/index.php?title=X64_alphanumeric_opcodes)
 

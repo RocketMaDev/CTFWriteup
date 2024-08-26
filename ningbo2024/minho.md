@@ -238,6 +238,6 @@ def payload(lo:int):
     sh.interactive()
 ```
 
-## 参考文献
+## 参考
 
 [Black Hat 2023 0解Pwn题Houseofminho详细WP](https://bbs.kanxue.com/thread-279588.htm)

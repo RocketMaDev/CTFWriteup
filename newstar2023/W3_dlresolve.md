@@ -100,7 +100,7 @@ Elf64_Rel fakeRel = {
 
 另外，作者还提到了其他文章所没有介绍的Full Relro的利用方法，也可以学习一下
 
-## 参考文献
+## 参考
 
 1. [图片来源文章](https://blog.csdn.net/IO1n0/article/details/103323738 "透过深入分析延迟绑定了解 ret_2_dl_resolve:1Oin0的博客")
 2. [深入讲解动态加载技术的知乎文章](https://zhuanlan.zhihu.com/p/134105591 "深入窥探动态链接:1Oin0的看雪论坛文章")

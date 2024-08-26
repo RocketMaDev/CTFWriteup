@@ -49,6 +49,6 @@ docker起不了，本地的环境久久无法正常工作，于是我决定直�
 
 同时这道题是对pwn一词的诠释，让我第一次见到了二进制利用在现实中的应用
 
-## 参考文献
+## 参考
 
 [解题所需的blog](https://www.rapid7.com/blog/post/2019/01/02/the-ghost-of-exploits-past-a-deep-dive-into-the-morris-worm/)

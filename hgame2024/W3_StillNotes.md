@@ -19,7 +19,7 @@ glibc 2.27
 没有UAF，大小限制在0x120以内，只有一个off-by-null...
 
 好不容易在网上找到了例题，show和alloc都需要打House of Einherjar，主要利用合并机制
-（例题附在参考文献中）
+（例题附在参考中）
 
 要注意的是，对于tcache堆块，无论是否有`PREV_INUSE`标记，都不会发生合并，这也是需要绕过的点
 
@@ -126,6 +126,6 @@ def payload(lo:int):
     sh.interactive()
 ```
 
-## 参考文献
+## 参考
 
 1. [Off-by-One精选博客](https://song-10.gitee.io/2020/05/14/pwn-2020-05-14-Off-By-One/#Control-Instruction-Pointer)
