@@ -1,5 +1,8 @@
 # clock 
 
+> [!NOTE]
+> 感谢 *dbgbgtf* 提供的复杂printf格式解释思路
+
 ## 文件属性
 
 |属性  |值    |
