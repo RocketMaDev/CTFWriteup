@@ -115,7 +115,7 @@ def payload(lo:int):
  8d 14 85 00 00 00 00   lea edx, [eax * 4]
 -8d 83 70 00 00 00      lea eax, [ebx + 0x70]   ; heap
 -01 d0                  add eax, edx            ; &heap[index]
-+8d 83 68 00 00 00      eax, [ebx + 0x68]       ; &DW.ref.__gxx_personality_v0
++8d 83 68 00 00 00      lea eax, [ebx + 0x68]   ; &DW.ref.__gxx_personality_v0
 +90                     nop
 +90                     nop
  83 ec 04               sub esp, 0x4
