@@ -148,6 +148,10 @@ def payload(lo:int):
 但它位于只读段，没有利用价值...甚至在2.38之后这个符号直接被删掉了，
 `exit`固定会调用`_IO_cleanup`。只能说运气好，静态编译把这个符号变成可写的了。
 
+还有一个比较神奇的特性是当程序静态链接后，tls会使用`malloc`分配出来，因为没有libc可挂
+
+<img src="assets/tls.png" height="90%" width="90%">
+
 ## 参考
 
 [rr: Record and Replay Framework](https://github.com/rr-debugger/rr)
