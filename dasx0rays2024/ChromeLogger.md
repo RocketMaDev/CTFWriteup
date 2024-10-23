@@ -632,6 +632,8 @@ def payload(lo: int, useFSOP: bool) -> bool:
     sh.close()
 ```
 
+<img src="assets/flag.png" height="75%" width="75%">
+
 ## 尾声
 
 尽管放了提示，但是8小时，没有师傅能做出我的题，感觉有些遗憾。要是放在XCTF分站赛的话，

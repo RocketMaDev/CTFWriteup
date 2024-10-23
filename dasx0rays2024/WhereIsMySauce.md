@@ -32,7 +32,13 @@ r
 
 ![flag](assets/cook.png)
 
-[TODO] server source
+## 做题之外
+
+这道题的所有源码可以在[这里](sources/WhereIsMySauce/)找到。当时在起server的时候还遇到了点麻烦，
+要想debuginfod server能提供源代码，不能简单将代码放在某个文件夹里，而是必须放在统一的`/usr/src`下，
+只是单单把源码放在家目录下并用`debuginfod -F ~`是无效的，只能分发其中的debuginfo。
+与此同时，debuginfo中的源代码路径也不能是相对的，必须是绝对路径，以`/usr/src/`开始，
+想用debuginfod来分发源码的师傅可以注意一下。
 
 ## 参考
 
