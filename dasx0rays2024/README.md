@@ -4,3 +4,4 @@
 
 1. [WhereIsMySauce](./WhereIsMySauce.md)
 2. [ChromeLogger](./ChromeLogger.md)
+3. [sixbytes & usersys](http://dbgbgtf.top/2024/10/23/dasctf/) | By *dbgbgtf*

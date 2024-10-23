@@ -161,6 +161,8 @@ cleanup:
 }
 ```
 
+<img src="assets/sandbox.png" height="70%" width="70%">
+
 ## No 2.35 ROP gadget
 
 这么折腾以后麻烦了，既不能用OneGadget，也不能用`system`，难道只能走rop了吗？
@@ -632,8 +634,8 @@ def payload(lo: int, useFSOP: bool) -> bool:
 
 ## 尾声
 
-尽管放了提示，但是8小时，没有师傅能做出我的题，感觉有些遗憾。
-各位师傅有什么想问的都可以在discussion中问。
+尽管放了提示，但是8小时，没有师傅能做出我的题，感觉有些遗憾。要是放在XCTF分站赛的话，
+估计不久就被秒了吧。各位师傅有什么想问的都可以在discussion中问。
 
 ## 参考
 
