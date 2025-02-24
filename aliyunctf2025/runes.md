@@ -1,5 +1,15 @@
 # runes
 
+> Show me your runes.
+>> hint:
+>> * No intended vulnerability in the bzImage/kernel, please exploit the
+>>   userspace chal binary.
+>> * As the challenge's name implies, you need to focus on the `syscall`
+>>   aka rune in this challenge. Find a way to **weaken the dark dragon's
+>>   power** once your character becomes strong enough.
+>> * All syscall numbers（系统调用号） used in the intended solution are
+>>   under 200 and relatively well used.
+
 ## 文件属性
 
 |属性  |值    |
