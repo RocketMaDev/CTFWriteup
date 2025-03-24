@@ -44,4 +44,4 @@
 ## Copyright
 
 Distributed under CC BY-NC 4.0  
-Copyright RocketDev 2023-2024
+Copyright RocketDev 2023-2025
