@@ -65,8 +65,8 @@ payload()
 栈上还有一个index，是下图中的reloc_arg，可以由此指向伪造的ElfRel
 
 那么这里为什么reloc_arg是0x30b呢？查了以下pwntools的源码，计算可推出如下关系：
-`reloc_arg * ElfRel.size + __DT_SYMTAB -> &fakeRel`  
-因为64位下ElfRel的大小是24字节，计算中可以将24带入；__DT_SYMTAB是指`__DT_SYMTAB`这个标签的地址；
+`reloc_arg * ElfRel.size + __DT_JMPREL -> &fakeRel`  
+因为64位下ElfRel的大小是24字节，计算中可以将24带入；__DT_JMPREL是指`__DT_JMPREL`这个标签的地址；
 这里使用'->'是因为这两边并不一定相等，而是存在对齐调整的  
 至此，`rop`部分已经分析完毕
 
