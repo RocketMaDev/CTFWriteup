@@ -35,7 +35,7 @@
 
 ![tcache_perthread_struct](assets/tcache_chunk.png)
 
-经过计算，`bufs[0]`~`bufs[15]`对应了0x2e0~0x3d0的堆块的`tcache_entry`，
+经过计算，`bufs[0]`-`bufs[15]`对应了0x2e0-0x3d0的堆块的`tcache_entry`，
 `[Combat Power]`对应了0x3f0的堆块的`tcache_entry`(`[HP]`和`[Attack]`未使用，可类推)，
 如果我们释放对应大小的堆块，我们就可以通过view等方式访问堆块，
 或者使用status等查看entry上放的值。
