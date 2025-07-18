@@ -51,6 +51,8 @@
 这样我们就在保留对chunk 3的访问的情况下将其释放，进入unsorted bin。最后打印chunk
 5就可以泄露。
 
+![heap layout 1](assets/layout1.png)
+
 由于我们已经劫持rbp到堆上，且`note_system`和`game`在返回时都会`leave; ret`，
 不难想到，退出时会做栈迁移，可以在堆上打rop。有了以上的数据，我们就能构造链子，
 最后的问题就是如何将链子写到最开始的chunk 0。由于提升hp、攻击力都是做加法，
@@ -59,6 +61,8 @@
 我们预先在chunk 7上写上chunk 0的加密后的指针，这样在使用提升hp、攻击力后，
 可以将entry变成`7+ -> 0 -> ?`的链子。此时连续分配两次，
 我们就重新获得了对chunk 0的控制权限，可以写入rop链了。最后的最后，退出拿shell。
+
+<img src="assets/layout2.png" width="60%">
 
 > [!IMPORTANT]
 > 在设置chunk 7的时候，注意到我使用了`ljust(0x30, b'\0')`，之所以要多留一些字节，
