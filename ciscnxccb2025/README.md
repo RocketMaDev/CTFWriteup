@@ -18,3 +18,19 @@
 我们队上半场awdp排名22，下半场渗透排名12，最终排名14，成功进军长城杯和国赛的决赛。
 
 [半决赛博客](https://rocketma.dev/2025/03/19/semifinal/)
+
+## 长城杯决赛
+
+经典爆0了，最后排名28，保底三等奖了。protobuf忘记准备了，明明之前刚遇到过，
+甚至我都已经star了解析message结构体的仓库了，结果忘记了，这下吃一堑吃一堑了
+
+1. orw
+2. interpreter
+3. tiny_console
+4. ccb-dev
+
+## 国赛决赛
+
+第一天只做了一个`easy_can`，`mqtt`那里就是没想到有个条件竞争，这么简单的题，太遗憾了
+
+1. [mqtt](final.mqtt.md)
