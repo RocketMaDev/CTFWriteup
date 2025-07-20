@@ -31,6 +31,12 @@
 
 ## 国赛决赛
 
-第一天只做了一个`easy_can`，`mqtt`那里就是没想到有个条件竞争，这么简单的题，太遗憾了
+第一天只做了一个`easy_can`，`mqtt`那里就是没想到有个条件竞争，这么简单的题，太遗憾了  
+第二天还可以吧，至少patch了2题，最后第33名，拿了个二等奖，只能明年再来了
 
-1. [mqtt](final.mqtt.md)
+1. [mqtt（赛后复现）](final.mqtt.md)
+2. k1cache
+3. DarkHeap
+4. LoginSystem
+5. embbed_httpd
+6. 3 4 5 patch总集篇

