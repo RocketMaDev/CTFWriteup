@@ -8,7 +8,7 @@
 
 ## 题解
 
-1. babytrace（赛后复现）(TODO)
+1. [babytrace（赛后复现）](babytrace.md)
 2. [Heaven's door（赛后复现）](heaven.md)
 3. Vpwn
 
