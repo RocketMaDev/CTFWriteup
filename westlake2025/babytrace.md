@@ -82,7 +82,7 @@ from pwn import *
 context.terminal = ['tmux','splitw','-h']
 context.arch = 'amd64'
 def GOLD_TEXT(x): return f'\x1b[33m{x}\x1b[0m'
-EXE = './babytraced'
+EXE = './babytrace'
 
 def payload(lo: int):
     global t

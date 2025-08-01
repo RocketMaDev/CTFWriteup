@@ -22,7 +22,7 @@
 
 ![diagram](assets/heaven_diagram.png)
 
-[官方博客](https://mp.weixin.qq.com/s/gXYLwdup6HYd_rETUSb9aA)的解法是切换64位/32位系统调用，
+[官方wp](https://mp.weixin.qq.com/s/gXYLwdup6HYd_rETUSb9aA)的解法是切换64位/32位系统调用，
 *dbgbgtf* 则在考虑再拼一个`syscall`出来。然而，貌似远程执行syscall后，rcx并不是 syscall
 之后的地址，他利用rcx做偏移写0x5失败了，最终没有打通。
 
@@ -54,3 +54,7 @@ def payload(lo: int):
     sh.interactive()
     sh.close()
 ```
+
+## 参考
+
+1. [第八届西湖论剑·中国杭州网络安全技能大赛初赛官方Write Up（下）](https://mp.weixin.qq.com/s/gXYLwdup6HYd_rETUSb9aA)
