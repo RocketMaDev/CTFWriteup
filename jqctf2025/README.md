@@ -5,6 +5,6 @@
 ## 题解
 
 1. [OldWine](OldWine.md)
-2. Crew Manager (TODO)
+2. Crew Manager
 3. old school parser
 4. Mem
