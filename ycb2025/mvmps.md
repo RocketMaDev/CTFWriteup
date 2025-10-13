@@ -242,7 +242,7 @@ class Operator:
                 self.rs = reg2
                 self.type = OP_TYPE.RD_RS
 
-            if not reg1.is_imm and not reg2.is_imm:
+            if not reg1.is_imm and not reg2.is_imm and reg2.val != SP:
                 # STUPID LOGIC!
                 self.rd, self.rs = self.rs, self.rd
 
