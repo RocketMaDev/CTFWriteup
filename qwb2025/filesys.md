@@ -15,6 +15,8 @@
 
 > [!TIP]
 > 建议先看[bph writeup](bph.md)再来看这篇writeup，知识点是相通的
+>
+> 以及感谢 *irontys* 的wp提供的灵感
 
 ### 漏洞分析
 
@@ -48,7 +50,7 @@ struct dirfile {
 
 因此借助`__dso_handle`，我们可以泄露程序基地址以及栈地址。
 
-> [!INFO]
+> [!NOTE]
 > 构造函数是编译时的一个属性，通过在函数头写上`__attribute__((constructor))`，
 > 编译器会安排其在运行`main`函数之前运行，之后这个函数通常可以在ELF中的`init_array`中找到，
 > libc会在初始化过程中调用它。
