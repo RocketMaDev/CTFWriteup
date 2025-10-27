@@ -318,5 +318,6 @@ def payload(lo: int):
 
 ## 参考
 
-1. [House of Apple 一种新的 glibc 中 IO 攻击方法 (2)](https://roderickchan.github.io/zh-cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/#%E5%88%A9%E7%94%A8_io_wfile_underflow_mmap%E5%87%BD%E6%95%B0%E6%8E%A7%E5%88%B6%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E6%B5%81)
-2. [x86-64/CET: Extend ucontext_t to save shadow stack](https://github.com/bminor/glibc/commit/25123a1c5c96429d70e75b85a9749b405909d7f2)
+1. [强网杯S9 Polaris战队Writeup](https://blog.xmcve.com/2025/10/20/%E5%BC%BA%E7%BD%91%E6%9D%AFS9-Polaris%E6%88%98%E9%98%9FWriteup/#title-2)
+2. [House of Apple 一种新的 glibc 中 IO 攻击方法 (2)](https://roderickchan.github.io/zh-cn/house-of-apple-%E4%B8%80%E7%A7%8D%E6%96%B0%E7%9A%84glibc%E4%B8%ADio%E6%94%BB%E5%87%BB%E6%96%B9%E6%B3%95-2/#%E5%88%A9%E7%94%A8_io_wfile_underflow_mmap%E5%87%BD%E6%95%B0%E6%8E%A7%E5%88%B6%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E6%B5%81)
+3. [x86-64/CET: Extend ucontext_t to save shadow stack](https://github.com/bminor/glibc/commit/25123a1c5c96429d70e75b85a9749b405909d7f2)
