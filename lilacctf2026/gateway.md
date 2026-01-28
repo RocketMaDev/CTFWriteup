@@ -102,3 +102,9 @@ def payload(lo: int):
 ```
 
 ![flag](assets/gateway-flag.png)
+
+## 参考
+
+1. [n-o-o-n/idp_hexagon: Hexagon processor module for IDA Pro disassembler](https://github.com/n-o-o-n/idp_hexagon)
+2. [HexRaysSA/ida-sdk: This repository offers an open-source C++ SDK bindings for IDA](https://github.com/HexRaysSA/ida-sdk)
+3. [linux-user/hexagon/syscall.tbl - QEMU/QEMU](https://gitlab.com/qemu-project/qemu/-/blob/master/linux-user/hexagon/syscall.tbl)
