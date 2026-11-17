@@ -185,3 +185,5 @@ def payload(lo: int):
 
     t.close()
 ```
+
+![flag](assets/flag.fffmt.png)
